@@ -17,20 +17,20 @@ Tested with :
 
 1. Create a model:
 
-
-    class MyModel(models.Model):
-        serie = PandasJSONField(typ="serie", null=True)
-        dataframe = PandasJSONField(null=True)
+        class MyModel(models.Model):
+            serie = PandasJSONField(typ="serie", null=True)
+            dataframe = PandasJSONField(null=True)
 
 
 2. Manipulate it as usual:
 
     	import pandas as pd
         s = pd.Series([1,2,3,4])
-	    df = pd.DataFrame( {"a":[1,2,3], "b":[11,12,13]} )
-	    m = MyModel(serie=s, dataframe=df)
-	    m.save()
+	df = pd.DataFrame( {"a":[1,2,3], "b":[11,12,13]} )
+	m = MyModel(serie=s, dataframe=df)
+	m.save()
 
         m = MyModel.objects.get(pk=1)
-	    print m.dataframe.describe()
+	print m.dataframe.describe() # m.dataframe is a pandas.DataFrame
 
+    
