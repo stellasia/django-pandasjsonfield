@@ -1,5 +1,8 @@
 # django-pandasjsonfield
 
+[![Build Status](https://travis-ci.org/stellasia/django-pandasjsonfield.svg)](https://travis-ci.org/stellasia/django-pandasjsonfield)
+
+
 A custom django model field to handle pandas Series and DataFrame. 
 
 Pandas objects are saved in JSON format in a Django TextField.
