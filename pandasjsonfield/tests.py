@@ -1,76 +1,72 @@
+# -*- coding: utf-8 -*-
+
+import sys
+import pandas as pd
+import pandas.util.testing as pdt
+
 from django.db import models
 from django.test import TestCase
-from django.utils import simplejson as json
-from django.forms.util import ValidationError
+#from django.utils import simplejson as json
+from django.forms.utils import ValidationError
 
 from .fields import PandasJSONField
-from .models import MyData
+from .models import MyModel
 
 
 class PandasJSONField(TestCase):
-    """JSONField Wrapper Tests"""
+    """
+    pandasjsonfield tests
+    """
 
-    model = MyData
-    
-    # def test_json_field_create(self):
-    #     """Test saving a JSON object in our JSONField"""
-    #     json_obj = {
-    #         "item_1": "this is a json blah",
-    #         "blergh": "hey, hey, hey"}
+    model = MyModel
 
-    #     obj = self.json_model.objects.create(json=json_obj)
-    #     new_obj = self.json_model.objects.get(id=obj.id)
+    l = [1, 2, 3, 4]
+    d = {"a": [1, 2, 3, 4],
+         "b": [11, 12, 13, 14],
+         "c": [21, 22, 23, 24]}
 
-    #     self.assertEqual(new_obj.json, json_obj)
+    def test_field_creation_series(self):
+        """ Test saving a Series to a PandasJSONField
+        """
+        s = pd.Series(self.l)
+        obj = self.model.objects.create(serie=s)
+        new_obj = self.model.objects.get(pk=obj.pk)
+        pdt.assert_series_equal(new_obj.serie, s)
 
-    # def test_string_in_json_field(self):
-    #     """Test saving an ordinary Python string in our JSONField"""
-    #     json_obj = 'blah blah'
-    #     obj = self.json_model.objects.create(json=json_obj)
-    #     new_obj = self.json_model.objects.get(id=obj.id)
+    def test_field_creation_dataframe(self):
+        """ Test saving a DataFrame to a PandasJSONField
+        """
+        df = pd.DataFrame(self.d)
+        obj = self.model.objects.create(dataframe=df)
+        new_obj = self.model.objects.get(pk=obj.pk)
+        pdt.assert_frame_equal(new_obj.dataframe, df)
 
-    #     self.assertEqual(new_obj.json, json_obj)
+    def test_field_modify_series(self):
+        """ Test updating a PandasJSONField """
+        s = pd.Series(self.l)
+        obj = self.model.objects.create(serie=s)
+        pdt.assert_series_equal(obj.serie, s)
 
-    # def test_float_in_json_field(self):
-    #     """Test saving a Python float in our JSONField"""
-    #     json_obj = 1.23
-    #     obj = self.json_model.objects.create(json=json_obj)
-    #     new_obj = self.json_model.objects.get(id=obj.id)
+        s2 = pd.Series( [10, 11, 12] )
+        obj.serie = s2
 
-    #     self.assertEqual(new_obj.json, json_obj)
+        pdt.assert_series_equal(obj.serie, s2)
+        obj.save()
+        pdt.assert_series_equal(obj.serie, s2)
 
-    # def test_int_in_json_field(self):
-    #     """Test saving a Python integer in our JSONField"""
-    #     json_obj = 1234567
-    #     obj = self.json_model.objects.create(json=json_obj)
-    #     new_obj = self.json_model.objects.get(id=obj.id)
 
-    #     self.assertEqual(new_obj.json, json_obj)
+    def test_field_modify_dataframe(self):
+        """ Test updating a PandasJSONField """
+        df = pd.DataFrame(self.d)
+        obj = self.model.objects.create(dataframe=df)
+        pdt.assert_frame_equal(obj.dataframe, df)
 
-    # def test_decimal_in_json_field(self):
-    #     """Test saving a Python Decimal in our JSONField"""
-    #     json_obj = Decimal(12.34)
-    #     obj = self.json_model.objects.create(json=json_obj)
-    #     new_obj = self.json_model.objects.get(id=obj.id)
+        df2 = pd.DataFrame( {"g": [10, 11, 12], "h": [20, 21, 22]} )
+        obj.dataframe = df2
 
-    #     # here we must know to convert the returned string back to Decimal,
-    #     # since json does not support that format
-    #     self.assertEqual(Decimal(new_obj.json), json_obj)
-
-    # def test_json_field_modify(self):
-    #     """Test modifying a JSON object in our JSONField"""
-    #     json_obj_1 = {'a': 1, 'b': 2}
-    #     json_obj_2 = {'a': 3, 'b': 4}
-
-    #     obj = self.json_model.objects.create(json=json_obj_1)
-    #     self.assertEqual(obj.json, json_obj_1)
-    #     obj.json = json_obj_2
-
-    #     self.assertEqual(obj.json, json_obj_2)
-    #     obj.save()
-    #     self.assertEqual(obj.json, json_obj_2)
-
-    #     self.assertTrue(obj)
+        pdt.assert_frame_equal(obj.dataframe, df2)
+        obj.save()
+        pdt.assert_frame_equal(obj.dataframe, df2)
 
     # def test_json_field_load(self):
     #     """Test loading a JSON object from the DB"""
