@@ -1,0 +1,32 @@
+language: python
+
+python:
+  - "2.7"
+  - "3.2"
+  - "3.4"
+
+env:
+  - DJANGO='django>=1.4,<1.5'
+  - DJANGO='django>=1.5,<1.6'
+  - DJANGO='django>=1.6,<1.7'
+  - DJANGO='django>=1.7,<1.8'
+  - DJANGO='django>=1.8a,<1.9'
+
+matrix:
+  exclude:
+    # Django 1.4 and 1.5 do not fully support Python 3.3
+    - env: DJANGO=Django==1.4.21
+      python: "3.3"
+
+install:
+  - pip install $DJANGO
+  - pip install -r requirements.txt
+
+script: python setup.py test
+
+matrix:
+  exclude:
+    - python: 3.2
+      env: DJANGO='django>=1.4,<1.5'
+    - python: 3.4
+      env: DJANGO='django>=1.4,<1.5'
