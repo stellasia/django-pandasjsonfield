@@ -6,9 +6,7 @@ import pandas.util.testing as pdt
 
 from django.db import models
 from django.test import TestCase
-#from django.utils import simplejson as json
-from django.forms.utils import ValidationError
-
+    
 from .fields import PandasJSONField
 from .models import MyModel
 
