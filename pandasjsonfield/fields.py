@@ -1,10 +1,13 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-
+try:
+    from django.utils import six
+except ImportError:
+    import six
 import pandas as pd
 
 
-class PandasJSONField(models.TextField):
+class PandasJSONField(six.with_metaclass(models.SubfieldBase, models.TextField)):
     """ Pandas Series or distribution
     saved in JSON format in a TextField.
 
