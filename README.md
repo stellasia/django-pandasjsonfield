@@ -12,28 +12,34 @@ Pandas objects are saved in JSON format in a Django TextField.
 
 Tested with :
 
-- `django 1.8`
-- `pandas 0.16.2`
+- `django 1.4` (for `python < 3`) to `1.8` 
+- `pandas>=0.16` (not tested for other versions but likely to work with [`pandas>=0.12`](http://pandas.pydata.org/pandas-docs/stable/whatsnew.html#i-o-enhancements))
 
 
 ## Usage
 
-1. Create a model:
+1. Installation 
+
+        pip install pandasjsonfield
+
+2. Create a model:
+
+        from pandasjsonfield import PandasJSONField
 
         class MyModel(models.Model):
             serie = PandasJSONField(typ="serie", null=True)
             dataframe = PandasJSONField(null=True)
 
 
-2. Manipulate it as usual:
+3. Manipulate it as usual:
 
-    	import pandas as pd
+        import pandas as pd
+        
         s = pd.Series([1,2,3,4])
-	df = pd.DataFrame( {"a":[1,2,3], "b":[11,12,13]} )
-	m = MyModel(serie=s, dataframe=df)
-	m.save()
-
+        df = pd.DataFrame( {"a":[1,2,3], "b":[11,12,13]} )
+        m = MyModel(serie=s, dataframe=df)
+        m.save()
+        
         m = MyModel.objects.get(pk=1)
-	print m.dataframe.describe() # m.dataframe is a pandas.DataFrame
+        print m.dataframe.describe() # m.dataframe is a pandas.DataFrame
 
-    
