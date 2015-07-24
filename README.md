@@ -43,3 +43,10 @@ Tested with :
         m = MyModel.objects.get(pk=1)
         print m.dataframe.describe() # m.dataframe is a pandas.DataFrame
 
+
+## INSPIRATION
+
+I have taken (a lot of) inspiration or technical solutions from the following repos: 
+
+- [django-jsonfield](https://github.com/bradjasper/django-jsonfield)
+- [django-newsletter](https://github.com/dokterbob/django-newsletter/)
