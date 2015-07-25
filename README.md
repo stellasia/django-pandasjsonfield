@@ -12,8 +12,9 @@ Pandas objects are saved in JSON format in a Django TextField.
 
 Tested with :
 
-- `django 1.4` (for `python < 3`) to `1.8` 
-- `pandas>=0.16` (not tested for other versions but likely to work with [`pandas>=0.12`](http://pandas.pydata.org/pandas-docs/stable/whatsnew.html#i-o-enhancements))
+- `django>=1.4` (`django>=1.5` for `python>=3`)
+- `pandas>=0.16` 
+__(not tested for other versions but likely to work with [`pandas>=0.12`](http://pandas.pydata.org/pandas-docs/stable/whatsnew.html#i-o-enhancements))__
 
 
 ## Usage
@@ -28,7 +29,7 @@ Tested with :
 
         class MyModel(models.Model):
             serie = PandasJSONField(typ="serie", null=True)
-            dataframe = PandasJSONField(null=True)
+            dataframe = PandasJSONField(typ="frame", null=True)
 
 
 3. Manipulate it as usual:
@@ -36,7 +37,7 @@ Tested with :
         import pandas as pd
         
         s = pd.Series([1,2,3,4])
-        df = pd.DataFrame( {"a":[1,2,3], "b":[11,12,13]} )
+        df = pd.DataFrame({"a":[1,2,3], "b":[11,12,13]})
         m = MyModel(serie=s, dataframe=df)
         m.save()
         
@@ -50,3 +51,5 @@ I have taken (a lot of) inspiration or technical solutions from the following re
 
 - [django-jsonfield](https://github.com/bradjasper/django-jsonfield)
 - [django-newsletter](https://github.com/dokterbob/django-newsletter/)
+
+Thanks to their authors. 
