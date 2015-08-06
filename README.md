@@ -14,7 +14,7 @@ Tested with :
 
 - `django>=1.4` (`django>=1.5` for `python>=3`)
 - `pandas>=0.16` 
-__(not tested for other versions but likely to work with [`pandas>=0.12`](http://pandas.pydata.org/pandas-docs/stable/whatsnew.html#i-o-enhancements))__
+_(not tested for other versions but likely to work with [`pandas>=0.12`](http://pandas.pydata.org/pandas-docs/stable/whatsnew.html#i-o-enhancements))_
 
 
 ## Usage
@@ -45,7 +45,7 @@ __(not tested for other versions but likely to work with [`pandas>=0.12`](http:/
         print m.dataframe.describe() # m.dataframe is a pandas.DataFrame
 
 
-## INSPIRATION
+## Inspiration 
 
 I have taken (a lot of) inspiration or technical solutions from the following repos: 
 
@@ -53,3 +53,8 @@ I have taken (a lot of) inspiration or technical solutions from the following re
 - [django-newsletter](https://github.com/dokterbob/django-newsletter/)
 
 Thanks to their authors. 
+
+
+## Want to contribute?
+
+Do not hesitate to open an [issue](https://github.com/stellasia/django-pandasjsonfield/issues) or fork!
