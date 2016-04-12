@@ -12,6 +12,7 @@ Pandas objects are saved in JSON format in a Django TextField.
 
 Tested with :
 
+- Python 2.7, 3.4, and 3.5 [pandas supported versions](http://pandas.pydata.org/pandas-docs/version/0.18.0/install.html#python-version-support)
 - `django>=1.4` (`django>=1.5` for `python>=3`)
 - `pandas>=0.16` 
 
