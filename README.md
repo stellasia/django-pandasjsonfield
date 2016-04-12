@@ -14,7 +14,6 @@ Tested with :
 
 - `django>=1.4` (`django>=1.5` for `python>=3`)
 - `pandas>=0.16` 
-_(not tested for other versions but likely to work with [`pandas>=0.12`](http://pandas.pydata.org/pandas-docs/stable/whatsnew.html#i-o-enhancements))_
 
 
 ## Usage
@@ -31,6 +30,7 @@ _(not tested for other versions but likely to work with [`pandas>=0.12`](http://
             serie = PandasJSONField(typ="serie", null=True)
             dataframe = PandasJSONField(typ="frame", null=True)
 
+    and migrate your database with usual django commands.
 
 3. Manipulate it as usual:
 
@@ -43,6 +43,18 @@ _(not tested for other versions but likely to work with [`pandas>=0.12`](http://
         
         m = MyModel.objects.get(pk=1)
         print m.dataframe.describe() # m.dataframe is a pandas.DataFrame
+
+
+## Changelog
+
+### `1.0 => 1.?`
+
+- Support for `django-1.9` and `pandas-0.18`
+
+- Change the method for object json-serialization from `orient="index"` to `orient="split"` (see [pandas doc](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_json.html) for more informations):
+	- allows to save the `Series` name
+	- fixes a bug in the data types in deserialization (see [this issue](https://github.com/pydata/pandas/issues/12866))
+	- If you are upgrading from version `1.0`, the first time you read your object, they will be deserialized correctly and re-serialized with the new method. This should be a smooth transition but please report any issue you may have in the [issue tracker](https://github.com/stellasia/django-pandasjsonfield/issues).
 
 
 ## Inspiration 
